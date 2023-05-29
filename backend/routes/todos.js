@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { signup, login } = '../controllers/users.js';
-router.post('/signup',signup);
-router.post('/login',login);
+const auth = require('../middleware/auth.js');
+const { createTodo, getTodos, getTodo, deleteTodo, updateTodo } = require('../controllers/todos.js');
+router.use(auth);
+router.post('/', createTodo);
+router.get('/', getTodos);
+router.get('/:id', getTodo);
+router.put('/:id', updateTodo);
+router.delete('/:id', deleteTodo);
 module.exports = router;
