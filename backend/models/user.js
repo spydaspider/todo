@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
-const validation = require('validator');
+const validator = require('validator');
 const UserSchema = new Schema({
     username:{
         type: String,
@@ -43,7 +43,7 @@ UserSchema.statics.signup = async function(username,email,password){
        }
        const salt = await bcrypt.genSalt(10);
        const hash = await bcrypt.hash(password, salt);
-       const user = await this.create({username, email, password});
+       const user = await this.create({username, email, password:hash});
        return user;
 }
 UserSchema.statics.login = async function(email,password){
