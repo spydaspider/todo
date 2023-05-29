@@ -10,8 +10,8 @@ app.use((req,res,next)=>{
     next();
 })
 const PORT = process.env.PORT || 5000;
-/* app.use('/api/users/',users);
-app.use('/api/routes/todos',todos); */
+ app.use('/api/users/',users);
+/*app.use('/api/routes/todos',todos); */
 mongoose.connect(process.env.MONGO_URI).then(()=>{
     app.listen(PORT,()=>{
         console.log(`Connected to mongodb on port ${PORT}`);
