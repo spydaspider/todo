@@ -28,7 +28,7 @@ export const useSignup = () =>{
         if(response.ok)
         {
             setIsLoading(false);
-            localStorage.setItem('user',json);
+            localStorage.setItem('user',JSON.stringify(json));
             dispatch({type: 'LOGIN', payload: json});
  
         }

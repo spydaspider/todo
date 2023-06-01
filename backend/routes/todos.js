@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth.js');
 const { createTodo, getTodos, getTodo, deleteTodo, updateTodo } = require('../controllers/todos.js');
-router.use(auth);
+ router.use(auth); 
 router.post('/', createTodo);
 router.get('/', getTodos);
 router.get('/:id', getTodo);

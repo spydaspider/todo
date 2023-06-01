@@ -5,6 +5,14 @@ const TodoSchema = new Schema({
         type: String,
         required: true
     },
+    isCompleted:{
+        type: Boolean,
+        default: false
+    },
+    isEditing:{
+        type: Boolean,
+        default: false
+    },
     user_id:{
         type:String,
         required: true

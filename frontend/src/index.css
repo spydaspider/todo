@@ -44,3 +44,21 @@ form{
   width: 80px;
 
 }
+.home-page{
+  background: red;
+  max-width: 600px;
+  margin: 100px auto;
+}
+.home-page input{
+  height: 40px;
+  font-size: 20px;
+}
+.home-page h1{
+  text-align: center;
+}
+.todo-field{
+  display: flex;
+  align-items: center;
+  gap: 1%;
+}
+

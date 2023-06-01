@@ -24,11 +24,11 @@ const getTodo = async(req,res)=>{
     }
 }
 const createTodo = async(req,res) =>{
-    const { description } = req.body;
+    const { description, isEditing, isCompleted } = req.body;
     try {
         const user_id = req.user._id;
 
-        const todo = await Todo.create({description,user_id});
+        const todo = await Todo.create({description,isEditing,isCompleted,user_id});
         res.status(200).json(todo);       
     } catch (error) {
         res.status(400).json({error: error.message});
