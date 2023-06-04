@@ -12,15 +12,17 @@ const todosReducer = (state,action) =>{
                 todos: [action.payload, ...state.todos]
             }
         case 'EDIT_TODO':
+        
             return{
-                todos: state.todos.map((todo)=>todo._id === action.payload._id ? {...todo, isEditing: true}: todo)
+                       ...state,
+                       todos: action.payload
             }
-        case 'UPDATE_TODO':
-            return {
-                
-                todos: state.todos.map((todo)=>todo._id === action.payload._id ? {...todo, isEditing: false}: todo)
-  
-            }
+    case 'UPDATE_TODO':
+        return{
+            ...state,
+            todos: action.payload
+        }
+      
         case 'NOT_COMPLETED_TODO':
             return{
                 todos: state.todos.map((todo)=>todo._id === action.payload._id ? {...todo, isCompleted: false}: todo)
