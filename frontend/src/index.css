@@ -61,4 +61,6 @@ form{
   align-items: center;
   gap: 1%;
 }
-
+.completed{
+   text-decoration: line-through;
+}

@@ -22,20 +22,9 @@ const todosReducer = (state,action) =>{
             ...state,
             todos: action.payload
         }
-      
-        case 'NOT_COMPLETED_TODO':
-            return{
-                todos: state.todos.map((todo)=>todo._id === action.payload._id ? {...todo, isCompleted: false}: todo)
-
-            }
-        case 'COMPLETE_TODO':
-            return{
-                todos: state.todos.map((todo)=>todo._id === action.payload._id ? {...todo, isCompleted: true}: todo)
-
-            }
         case 'DELETE_TODO':
             return{
-                todos: state.filter((todo)=>todo._id !== action.payload._id)
+                todos: state.todos.filter((todo)=>todo._id !== action.payload._id)
             }
         default:
             return state;

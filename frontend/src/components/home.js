@@ -27,7 +27,7 @@ const Home = () =>{
               } 
               if(!response.ok)
               {
-                console.log("The response was not okay");
+                setError(json.error);
               } 
           }
           if(user)
@@ -37,6 +37,91 @@ const Home = () =>{
             
           } 
     },[dispatch, user])
+    //handle uncompleted
+    const handleUncomplete = async(id) =>{
+      let completedTodos;
+      let completedTodo;
+          if(todos)
+          {
+             completedTodos = todos.map((todo)=>todo._id === id ? {...todo, isCompleted: false}: todo);
+             
+           }
+           completedTodos.forEach((todo)=>{
+              if(todo._id === id)
+              {
+                 completedTodo = todo;
+              }
+           })
+           const response = await fetch('/api/todos/'+id,{
+              method: 'PUT',
+              headers:{
+                 'Authorization':`Bearer ${user.token}`,
+                 'Content-Type': 'Application/json'
+              },
+              body: JSON.stringify(completedTodo)
+           })
+           const json = await response.json();
+           if(!response.ok)
+           {
+              setError(json.error);
+           }
+           if(response.ok)
+           {
+              dispatch({type: 'UPDATE_TODO', payload: completedTodos});
+           }
+   }
+    //handle completed
+    const handleCompleted = async(id) =>{
+       let completedTodos;
+       let completedTodo;
+           if(todos)
+           {
+              completedTodos = todos.map((todo)=>todo._id === id ? {...todo, isCompleted: true}: todo);
+              
+            }
+            completedTodos.forEach((todo)=>{
+               if(todo._id === id)
+               {
+                  completedTodo = todo;
+               }
+            })
+            const response = await fetch('/api/todos/'+id,{
+               method: 'PUT',
+               headers:{
+                  'Authorization':`Bearer ${user.token}`,
+                  'Content-Type': 'Application/json'
+               },
+               body: JSON.stringify(completedTodo)
+            })
+            const json = await response.json();
+            if(!response.ok)
+            {
+               setError(json.error);
+            }
+            if(response.ok)
+            {
+               dispatch({type: 'UPDATE_TODO', payload: completedTodos});
+            }
+    }
+    //handle remove
+    const handleRemove = async(id) =>{
+          const response = await fetch('/api/todos/'+id,{
+            method: 'DELETE',
+            headers: {
+               'Authorization': `Bearer ${user.token}`
+            }
+            
+          })
+          const json = await response.json();
+          if(!response.ok)
+          {
+             setError(json.error);
+          }
+          if(response.ok)
+          {
+             dispatch({type: 'DELETE_TODO',payload: json});
+          }
+    }
     const handleUpdate = async(id) =>{  
       //get to exact todos and update
       const isEditing = false;
@@ -128,23 +213,7 @@ const Home = () =>{
            dispatch({type: 'EDIT_TODO',payload: todoOnes });
 
          }
-           /*  const response =  await fetch('/api/todos/'+id,{
-            method: 'PUT',
-            headers: {
-               'Content-type': 'Application/json',
-               'Authorization': `Bearer ${user.token}`
-            },
-            body: JSON.stringify(todoOne)
-           }) 
-           const json = await response.json();
-           if(!response.ok)
-           {
-               setError(json.error);
-           }
-           if(response.ok)
-           {
-               /*  dispatch({type: 'EDIT_TODO',payload: json}); 
-           }  */
+           
       } 
     return(
         <div className = "home-page">
@@ -161,11 +230,14 @@ const Home = () =>{
                 </form>) 
            : 
             <div key = {todo._id} className = "todo-field">
-                   <p>{todo.description}</p>
+                   <p className = {todo.isCompleted ? 'completed':''}>{todo.description}</p>
                     
-               
-            <button>Completed</button>
-               <button>remove</button>
+            { 
+               !todo.isCompleted ?  
+            <button onClick = {()=>handleCompleted(todo._id)}>Completed</button>:  
+            <button onClick = {()=>handleUncomplete(todo._id)}>uncompleted</button>
+              }
+               <button onClick = {()=>handleRemove(todo._id)}>remove</button>
                <button onClick = {()=>handleEdit(todo._id)}>edit</button>
             </div>
                ))
