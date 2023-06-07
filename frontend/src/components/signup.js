@@ -24,7 +24,7 @@ const Signup = () => {
             <div className = "fb">
             <button>signup</button>
             </div>
-            {error && <div className = "form-error">{error}</div>}
+            {error && <div className = "error">{error}</div>}
             </form>
         </div>
     )

@@ -2,6 +2,10 @@ import React,{ useState, useEffect } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 import { useTodosContext } from '../hooks/useTodosContext.js';
 import EditTodo from './EditTodo';
+import DeleteIcon from '../images/delete.png';
+import UpdateIcon from '../images/update.png';
+import CompletedIcon from '../images/completed.png';
+import Uncomplete from '../images/uncomplete.png';
 const Home = () =>{
     const [description, setDescription] = useState(null);
     const { user } = useAuthContext();
@@ -219,30 +223,36 @@ const Home = () =>{
         <div className = "home-page">
             <h1> Todo </h1>
             <form onSubmit = {handleSubmit}>
-            <input type = "text" placeholder = 'Enter todo here' value = {description} onChange = {(e)=>setDescription(e.target.value)}/>
+            <input className = "todo-input" type = "text" placeholder = 'Enter todo here' value = {description} onChange = {(e)=>setDescription(e.target.value)}/>
             </form>
+            <div className = "todos-area">
             {
              todos &&
                todos.map((todo)=>(  
                 todo.isEditing ? (  <form onSubmit = {handleSubmit} className = "edit-input">
-                <input type = "text" onChange = {(e)=>setEditValue(e.target.value)} placeholder = {todo.description}/>
-                <button onClick = {()=>handleUpdate(todo._id)}>Update</button>
+                <input className = "update-input" type = "text" onChange = {(e)=>setEditValue(e.target.value)} placeholder = {todo.description}/>
+                <img src = {UpdateIcon} onClick = {()=>handleUpdate(todo._id)}/>
                 </form>) 
            : 
             <div key = {todo._id} className = "todo-field">
+                    <div className = "desc-style">
                    <p className = {todo.isCompleted ? 'completed':''}>{todo.description}</p>
-                    
+                    </div>
+                    <div className = "todo-buttons">
             { 
                !todo.isCompleted ?  
-            <button onClick = {()=>handleCompleted(todo._id)}>Completed</button>:  
-            <button onClick = {()=>handleUncomplete(todo._id)}>uncompleted</button>
+            <img src = {CompletedIcon} onClick = {()=>handleCompleted(todo._id)}/>:  
+            <img src = {Uncomplete} onClick = {()=>handleUncomplete(todo._id)}/>
               }
-               <button onClick = {()=>handleRemove(todo._id)}>remove</button>
-               <button onClick = {()=>handleEdit(todo._id)}>edit</button>
+                             <img src = {UpdateIcon} onClick = {()=>handleEdit(todo._id)}/>
+
+               <img src = {DeleteIcon} onClick = {()=>handleRemove(todo._id)}/>
+            
+               </div>
             </div>
                ))
                 }
-               
+               </div>
             
         </div>
     )

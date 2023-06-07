@@ -20,12 +20,13 @@ const Login = () => {
    
                 <input type='email' placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input type='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
-   
+
             <div className = "fb">
             <button>login</button>
             </div>
-            {error && <div className = "error">{error}</div>}
             </form>
+            {error && <div className = "error">{error}</div>}
+
         </div>
     )
 }
